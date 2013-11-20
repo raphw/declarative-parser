@@ -74,11 +74,27 @@ public class DefaultObjectDelegate extends ObjectDelegate<Object> {
         }
     }
 
+    private static String findPattern(Class<?> type) {
+        if (type == Integer.class || type == Short.class || type == Byte.class || type == Long.class) {
+            return IntDelegate.INTEGER_NUMBER_REGEX;
+        } else if (type == Double.class || type == Float.class) {
+            return DoubleDelegate.DECIMAL_NUMBER_REGEX;
+        } else if (type == Character.class) {
+            return CharDelegate.SINGLE_CHARACTER_REGEX;
+        } else if (type == Boolean.class) {
+            return BooleanDelegate.BOOLEAN_NAME_REGEX;
+        } else {
+            return NON_GREEDY_ALL_MATCH_PATTERN;
+        }
+    }
+
     private final Decoder decoder;
+    private final String pattern;
 
     public DefaultObjectDelegate(Field field, Locale locale) {
         super(field, locale);
         decoder = findDecoder(field.getType());
+        pattern = findPattern(field.getType());
     }
 
     @Override
@@ -89,5 +105,10 @@ public class DefaultObjectDelegate extends ObjectDelegate<Object> {
     @Override
     protected String encode(Object bean) {
         return bean != null ? bean.toString() : "";
+    }
+
+    @Override
+    public String getPattern() {
+        return pattern;
     }
 }

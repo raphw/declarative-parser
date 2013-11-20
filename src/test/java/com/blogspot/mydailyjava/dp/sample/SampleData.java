@@ -87,8 +87,26 @@ public final class SampleData {
 
     public static void assertEscapeBeans(List<EscapePatternBean> beans) {
         assertEquals(1, beans.size());
-        assertEquals("value", beans.get(0).getReplace());
-        assertNull(beans.get(0).getDoNotReplace());
+        EscapePatternBean bean = beans.get(0);
+        assertEquals("val1", bean.getNormal());
+        assertNull(bean.getEscaped());
+        assertEquals("val3", bean.getUnescaped());
+        assertEquals("val4", bean.getNormalInBrace());
+        assertEquals("val5", bean.getDoubleNormalInBrace());
+        assertNull(bean.getEscapedInEscapedBrace());
+    }
+
+    public static EscapePatternBean makeEscapeBean() {
+        EscapePatternBean bean = new EscapePatternBean();
+        bean.setNormal("val1");
+        bean.setUnescaped("val3");
+        bean.setNormalInBrace("val4");
+        bean.setDoubleNormalInBrace("val5");
+        return bean;
+    }
+
+    public static void assertEscapeBean(String value) {
+        assertEquals(";val1;@escaped@;\\val3;(val4);\\val5\\;(@escapedInEscapedBrace@);\r\n", value);
     }
 
     private SampleData() {

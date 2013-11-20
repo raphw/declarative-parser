@@ -23,12 +23,13 @@ public abstract class ObjectDelegate<T> extends PropertyDelegate {
         return encode((T) getField().get(bean));
     }
 
+    /**
+     * Will never receive null as its argument. Can return null.
+     */
     protected abstract T decode(String raw) throws IllegalAccessException;
 
+    /**
+     * Must not return null. Rather return empty string. Might receive null as its argument.
+     */
     protected abstract String encode(T bean) throws IllegalAccessException;
-
-    @Override
-    public String getPattern() {
-        return NON_GREEDY_ALL_MATCH_PATTERN;
-    }
 }

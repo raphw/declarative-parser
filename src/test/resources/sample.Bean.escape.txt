@@ -1,1 +1,1 @@
-value;@doNotReplace@
+;val1;@escaped@;\val3;(val4);\val5\;(@escapedInEscapedBrace@);

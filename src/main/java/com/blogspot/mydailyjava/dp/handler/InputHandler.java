@@ -13,6 +13,24 @@ import java.util.regex.Pattern;
 
 class InputHandler {
 
+    private class WritePatternPropertyMatcher implements PropertyExpressionParser.IPropertyMatch {
+
+        private final Object bean;
+
+        private WritePatternPropertyMatcher(Object bean) {
+            this.bean = bean;
+        }
+
+        @Override
+        public void match(int matchIndex, String propertyName, StringBuilder patternBuilder) {
+            try {
+                patternBuilder.append(matchedProperties.get(matchIndex).getValue(bean));
+            } catch (IllegalAccessException e) {
+                throw new TransformationException(String.format("Could not access property for %s", bean.getClass()), e);
+            }
+        }
+    }
+
     private final Pattern actualReadPattern;
     private final String actualWritePattern;
     private final List<PropertyDelegate> matchedProperties;
@@ -97,27 +115,6 @@ class InputHandler {
     }
 
     public String write(Object bean) {
-        try {
-            return tryWrite(bean);
-        } catch (IllegalAccessException e) {
-            throw new TransformationException(String.format("Could not access property for %s", bean.getClass()), e);
-        }
-    }
-
-    private String tryWrite(Object bean) throws IllegalAccessException {
-        StringBuilder expressionBuilder = new StringBuilder();
-        Matcher patternMatcher = ReadPatternResolver.PROPERTY_EXPRESSION_PATTERN.matcher(actualWritePattern);
-        int lastPropertyVariableIndex = 0;
-        for (int i = 0; patternMatcher.find(); i++) {
-            expressionBuilder.append(actualWritePattern.substring(lastPropertyVariableIndex, patternMatcher.start()));
-            try {
-                expressionBuilder.append(matchedProperties.get(i).getValue(bean));
-            } catch (RuntimeException e) {
-                throw new TransformationException(String.format("Could not retrieve value for property %d", i), e);
-            }
-            lastPropertyVariableIndex = patternMatcher.end();
-        }
-        expressionBuilder.append(actualWritePattern.substring(lastPropertyVariableIndex, actualWritePattern.length()));
-        return expressionBuilder.toString();
+        return new PropertyExpressionParser(new WritePatternPropertyMatcher(bean)).process(actualWritePattern);
     }
 }

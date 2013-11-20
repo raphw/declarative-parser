@@ -65,6 +65,7 @@ public class BeanTransformerTest {
         } finally {
             fileReader.close();
         }
+        SampleData.assertEscapeBean(beanTransformer.writeSingle(SampleData.makeEscapeBean()));
     }
 
     private static void testRead(BeanTransformer<SampleBean> beanTransformer, File input) throws Exception {

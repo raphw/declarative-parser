@@ -1,27 +1,71 @@
 package com.blogspot.mydailyjava.dp.sample;
 
 import com.blogspot.mydailyjava.dp.annotation.MatchBy;
+import com.blogspot.mydailyjava.dp.annotation.WritePattern;
 
-@MatchBy("^(@replace@);(\\@doNotReplace@)$")
+@MatchBy(";(@normal@);(\\@escaped@);(\\\\@unescaped@);\\(@normalInBrace@\\);" +
+        "\\\\(@doubleNormalInBrace@\\\\);\\(\\@escapedInEscapedBrace@\\);")
+@WritePattern(";@normal@;\\@escaped@;\\\\@unescaped@;(@normalInBrace@);" +
+        "\\\\@doubleNormalInBrace@\\\\;(\\@escapedInEscapedBrace@);")
 public class EscapePatternBean {
 
-    private String replace;
+    private String normal;
 
-    private String doNotReplace;
+    private String escaped;
 
-    public String getReplace() {
-        return replace;
+    private String unescaped;
+
+    private String normalInBrace;
+
+    private String doubleNormalInBrace;
+
+    private String escapedInEscapedBrace;
+
+    public String getNormal() {
+        return normal;
     }
 
-    public void setReplace(String replace) {
-        this.replace = replace;
+    public void setNormal(String normal) {
+        this.normal = normal;
     }
 
-    public String getDoNotReplace() {
-        return doNotReplace;
+    public String getEscaped() {
+        return escaped;
     }
 
-    public void setDoNotReplace(String doNotReplace) {
-        this.doNotReplace = doNotReplace;
+    public void setEscaped(String escaped) {
+        this.escaped = escaped;
+    }
+
+    public String getUnescaped() {
+        return unescaped;
+    }
+
+    public void setUnescaped(String unescaped) {
+        this.unescaped = unescaped;
+    }
+
+    public String getNormalInBrace() {
+        return normalInBrace;
+    }
+
+    public void setNormalInBrace(String normalInBrace) {
+        this.normalInBrace = normalInBrace;
+    }
+
+    public String getDoubleNormalInBrace() {
+        return doubleNormalInBrace;
+    }
+
+    public void setDoubleNormalInBrace(String doubleNormalInBrace) {
+        this.doubleNormalInBrace = doubleNormalInBrace;
+    }
+
+    public String getEscapedInEscapedBrace() {
+        return escapedInEscapedBrace;
+    }
+
+    public void setEscapedInEscapedBrace(String escapedInEscapedBrace) {
+        this.escapedInEscapedBrace = escapedInEscapedBrace;
     }
 }

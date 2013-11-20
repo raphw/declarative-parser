@@ -13,8 +13,8 @@ import java.util.Locale;
 
 class PropertyResolver {
 
-    private static final String GROUP_BRACE_REGEX = "(?<!\\\\\\))\\((?!\\?:)";
-    private static final String ESCAPED_GROUP_BRACE = "(?:";
+    private static final String UNESCAPED_GROUP_START_REGEX = "(?<!\\\\)(\\\\\\\\)*\\((?!\\?:)";
+    private static final String ESCAPED_GROUP_START = "(?:";
 
     private final IDelegationFactory delegationFactory;
     private final Locale locale;
@@ -36,7 +36,7 @@ class PropertyResolver {
     }
 
     protected static String uncaptureGroups(String expression) {
-        return expression.replaceAll(GROUP_BRACE_REGEX, ESCAPED_GROUP_BRACE);
+        return expression.replaceAll(UNESCAPED_GROUP_START_REGEX, ESCAPED_GROUP_START);
     }
 
     private static boolean isOptional(Field field) {

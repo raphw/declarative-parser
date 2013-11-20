@@ -7,6 +7,8 @@ import java.util.Locale;
 
 public class CharDelegate extends PropertyDelegate {
 
+    public static final String SINGLE_CHARACTER_REGEX = ".{1}";
+
     public CharDelegate(Field field, Locale locale) {
         super(field, locale);
     }
@@ -26,6 +28,6 @@ public class CharDelegate extends PropertyDelegate {
 
     @Override
     public String getPattern() {
-        return ".{1}";
+        return SINGLE_CHARACTER_REGEX;
     }
 }

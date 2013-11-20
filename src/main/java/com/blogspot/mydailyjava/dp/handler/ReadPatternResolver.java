@@ -7,13 +7,28 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 class ReadPatternResolver {
 
-    private static final String PROPERTY_EXPRESSION = "(?<!\\\\)(\\\\\\\\)*@[a-zA-Z][a-zA-Z0-9]*@";
-    protected static final Pattern PROPERTY_EXPRESSION_PATTERN = Pattern.compile(PROPERTY_EXPRESSION);
+    private class ReadPatternPropertyMatcher implements PropertyExpressionParser.IPropertyMatch {
+
+        private final List<PropertyDelegate> propertyDelegates;
+
+        private ReadPatternPropertyMatcher(List<PropertyDelegate> propertyDelegates) {
+            this.propertyDelegates = propertyDelegates;
+        }
+
+        @Override
+        public void match(int matchIndex, String propertyName, StringBuilder patternBuilder) {
+            Field field = null;
+            try {
+                field = clazz.getDeclaredField(propertyName);
+                propertyDelegates.add(propertyResolver.resolve(field, patternBuilder));
+            } catch (Exception e) {
+                throw new TransformationException(String.format("Could not retrieve value for property %d", matchIndex), e);
+            }
+        }
+    }
 
     static class ResolvedPattern {
 
@@ -51,21 +66,9 @@ class ReadPatternResolver {
     }
 
     private ResolvedPattern tryResolve(final String rawPattern) throws NoSuchFieldException {
-        StringBuilder readPattern = new StringBuilder();
-        Matcher rawPatternMatcher = PROPERTY_EXPRESSION_PATTERN.matcher(rawPattern);
-        List<PropertyDelegate> propertiesInPattern = new ArrayList<PropertyDelegate>();
-        int lastPropertyVariableIndex = 0;
-        while (rawPatternMatcher.find()) {
-            String propertyVariableName = rawPatternMatcher.group();
-            readPattern.append(rawPattern, lastPropertyVariableIndex, rawPatternMatcher.start());
-            int propertyNameStartIndex = propertyVariableName.indexOf('@') + 1;
-            readPattern.append(propertyVariableName, 1, propertyNameStartIndex);
-            String propertyName = propertyVariableName.substring(propertyNameStartIndex, propertyVariableName.length() - 1);
-            Field field = clazz.getDeclaredField(propertyName);
-            propertiesInPattern.add(propertyResolver.resolve(field, readPattern));
-            lastPropertyVariableIndex = rawPatternMatcher.end();
-        }
-        readPattern.append(rawPattern, lastPropertyVariableIndex, rawPattern.length());
-        return new ResolvedPattern(readPattern.toString(), propertiesInPattern);
+        List<PropertyDelegate> propertyDelegates = new ArrayList<PropertyDelegate>();
+        String readPattern = new PropertyExpressionParser(new ReadPatternPropertyMatcher(propertyDelegates))
+                .process(rawPattern);
+        return new ResolvedPattern(readPattern, propertyDelegates);
     }
 }

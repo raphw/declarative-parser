@@ -5,6 +5,8 @@ import java.util.Locale;
 
 public class BooleanDelegate extends PropertyDelegate {
 
+    public static final String BOOLEAN_NAME_REGEX = "(true)|(false)";
+
     public BooleanDelegate(Field field, Locale locale) {
         super(field, locale);
     }
@@ -21,6 +23,6 @@ public class BooleanDelegate extends PropertyDelegate {
 
     @Override
     public String getPattern() {
-        return "(true)|(false)";
+        return BOOLEAN_NAME_REGEX;
     }
 }
