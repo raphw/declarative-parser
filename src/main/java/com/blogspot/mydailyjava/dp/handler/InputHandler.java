@@ -37,18 +37,18 @@ class InputHandler {
     private final Skip.Policy skipPolicy;
 
     public InputHandler(Class<?> type, IDelegationFactory delegationFactory,
-                        String patternOverride, String writePatternOverride,
+                        String readPatternOverride, String writePatternOverride,
                         Skip.Policy skipPolicy, Locale locale) {
-        String actualReadPattern = PropertyResolver.uncaptureGroups(findActualReadPattern(type, patternOverride));
+        String rawReadPattern = PropertyResolver.uncaptureGroups(findRawReadPattern(type, readPatternOverride));
         ReadPatternResolver.ResolvedPattern resolvedPattern = new ReadPatternResolver(type, delegationFactory, locale)
-                .resolve(actualReadPattern);
+                .resolve(rawReadPattern);
         this.actualReadPattern = Pattern.compile(resolvedPattern.getReadPattern());
         this.matchedProperties = resolvedPattern.getPropertyDelegates();
-        this.actualWritePattern = findActualWritePattern(type, actualReadPattern, writePatternOverride);
+        this.actualWritePattern = findActualWritePattern(type, rawReadPattern, writePatternOverride);
         this.skipPolicy = findActualSkipPolicy(type, skipPolicy);
     }
 
-    private static String findActualReadPattern(Class<?> type, String override) {
+    private static String findRawReadPattern(Class<?> type, String override) {
         if (override != null) {
             return override;
         }
@@ -115,6 +115,6 @@ class InputHandler {
     }
 
     public String write(Object bean) {
-        return new PropertyExpressionParser(new WritePatternPropertyMatcher(bean)).process(actualWritePattern);
+        return new PropertyExpressionParser(new WritePatternPropertyMatcher(bean), false).process(actualWritePattern);
     }
 }

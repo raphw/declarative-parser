@@ -6,7 +6,7 @@ import com.blogspot.mydailyjava.dp.annotation.WritePattern;
 @MatchBy(";(@normal@);(\\@escaped@);(\\\\@unescaped@);\\(@normalInBrace@\\);" +
         "\\\\(@doubleNormalInBrace@\\\\);\\(\\@escapedInEscapedBrace@\\);")
 @WritePattern(";@normal@;\\@escaped@;\\\\@unescaped@;(@normalInBrace@);" +
-        "\\\\@doubleNormalInBrace@\\\\;(\\@escapedInEscapedBrace@);")
+        "\\\\@doubleNormalInBrace@\\;(\\@escapedInEscapedBrace@);")
 public class EscapePatternBean {
 
     private String normal;
@@ -33,6 +33,7 @@ public class EscapePatternBean {
         return escaped;
     }
 
+    @SuppressWarnings("unused")
     public void setEscaped(String escaped) {
         this.escaped = escaped;
     }
@@ -65,6 +66,7 @@ public class EscapePatternBean {
         return escapedInEscapedBrace;
     }
 
+    @SuppressWarnings("unused")
     public void setEscapedInEscapedBrace(String escapedInEscapedBrace) {
         this.escapedInEscapedBrace = escapedInEscapedBrace;
     }

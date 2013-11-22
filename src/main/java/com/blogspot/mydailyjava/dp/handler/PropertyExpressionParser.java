@@ -17,26 +17,28 @@ class PropertyExpressionParser {
     }
 
     private final IPropertyMatch propertyMatch;
+    private final int reinstatingFactor;
 
-    public PropertyExpressionParser(IPropertyMatch propertyMatch) {
+    public PropertyExpressionParser(IPropertyMatch propertyMatch, boolean reinstateEscaping) {
         this.propertyMatch = propertyMatch;
+        reinstatingFactor = reinstateEscaping ? 2 : 1;
     }
 
     public String process(String rawPattern) {
         StringBuilder expressionBuilder = new StringBuilder();
         Matcher matcher = PROPERTY_EXPRESSION_PATTERN.matcher(rawPattern);
         int lastPropertyVariableIndex = 0;
-        for (int matchIndex = 0; matcher.find(); matchIndex++) {
+        for (int matchIndex = 0; matcher.find(); ) {
             int slashes = numberOfPrecededSlashes(rawPattern.substring(lastPropertyVariableIndex, matcher.start()));
             expressionBuilder.append(rawPattern, lastPropertyVariableIndex, matcher.start() - slashes);
-            for (int escapedAdded = 0; escapedAdded < slashes / 2; escapedAdded++) {
+            for (int escapedAdded = 0; escapedAdded < (slashes / 2) * reinstatingFactor; escapedAdded++) {
                 expressionBuilder.append(ESCAPE_SYMBOL);
             }
             if (slashes % 2 == 1) { // uneven number of slashes: expression is escaped
                 expressionBuilder.append(rawPattern, matcher.start(), matcher.end());
             } else { // even number of slashes: expression is not escaped
                 String propertyName = rawPattern.substring(matcher.start() + 1, matcher.end() - 1);
-                propertyMatch.match(matchIndex, propertyName, expressionBuilder);
+                propertyMatch.match(matchIndex++, propertyName, expressionBuilder);
             }
             lastPropertyVariableIndex = matcher.end();
         }

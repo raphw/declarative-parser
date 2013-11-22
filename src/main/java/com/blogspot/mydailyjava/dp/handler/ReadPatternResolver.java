@@ -20,9 +20,8 @@ class ReadPatternResolver {
 
         @Override
         public void match(int matchIndex, String propertyName, StringBuilder patternBuilder) {
-            Field field = null;
             try {
-                field = clazz.getDeclaredField(propertyName);
+                Field field = clazz.getDeclaredField(propertyName);
                 propertyDelegates.add(propertyResolver.resolve(field, patternBuilder));
             } catch (Exception e) {
                 throw new TransformationException(String.format("Could not retrieve value for property %d", matchIndex), e);
@@ -67,7 +66,7 @@ class ReadPatternResolver {
 
     private ResolvedPattern tryResolve(final String rawPattern) throws NoSuchFieldException {
         List<PropertyDelegate> propertyDelegates = new ArrayList<PropertyDelegate>();
-        String readPattern = new PropertyExpressionParser(new ReadPatternPropertyMatcher(propertyDelegates))
+        String readPattern = new PropertyExpressionParser(new ReadPatternPropertyMatcher(propertyDelegates), true)
                 .process(rawPattern);
         return new ResolvedPattern(readPattern, propertyDelegates);
     }

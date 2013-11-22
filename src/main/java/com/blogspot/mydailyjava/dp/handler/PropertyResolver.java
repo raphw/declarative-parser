@@ -14,7 +14,7 @@ import java.util.Locale;
 class PropertyResolver {
 
     private static final String UNESCAPED_GROUP_START_REGEX = "(?<!\\\\)(\\\\\\\\)*\\((?!\\?:)";
-    private static final String ESCAPED_GROUP_START = "(?:";
+    private static final String ESCAPED_GROUP_START = "$1(?:";
 
     private final IDelegationFactory delegationFactory;
     private final Locale locale;
