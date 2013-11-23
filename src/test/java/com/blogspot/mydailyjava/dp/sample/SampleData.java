@@ -106,7 +106,7 @@ public final class SampleData {
     }
 
     public static void assertEscapeBean(String value) {
-        assertEquals(";val1;@escaped@;\\val3;(val4);\\val5\\;(@escapedInEscapedBrace@);\r\n", value);
+        assertEquals(";val1;@escaped@;\\val3;(val4);\\val5\\;(@escapedInEscapedBrace@);", value);
     }
 
     private SampleData() {

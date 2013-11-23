@@ -155,7 +155,7 @@ public class BeanTransformer<T> {
     }
 
     public String writeSingle(T bean) {
-        return write(Collections.singletonList(bean));
+        return write(Collections.singletonList(bean)).replaceFirst("(\r)?\n", "");
     }
 
     public String write(List<? extends T> beans) {
