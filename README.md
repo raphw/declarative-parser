@@ -1,4 +1,4 @@
-A declarative parser for Java beans
+A declarative parser based on Java beans
 ---------------------
 This miniature tool provides help with parsing a custom content format by creating Java beans that extract this data
 where each bean resembles a single row of content of a specified source. The mapping of the input to a Java bean is based
