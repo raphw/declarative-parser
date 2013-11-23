@@ -112,4 +112,6 @@ for creating (custom) `PropertyDelegate`s for any field. The default implementat
 for such an implementation. That way, it would be for example possible to automatically create suitable patterns for [bean 
 validation (JSR-303) annotations](http://beanvalidation.org/1.0/spec/).
 
+Licensed under the Apache Software License, Version 2.0
+
 [![Build Status](https://travis-ci.org/raphw/declarative-parser.png)](https://travis-ci.org/raphw/declarative-parser)
