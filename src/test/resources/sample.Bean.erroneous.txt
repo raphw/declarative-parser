@@ -1,18 +1,30 @@
 First;USER_RESOLVER;user_pattern;optional;10000;1000;100;10000000;X;100.5;10.5;true
-THIS LINE DOES NOT MATCH
+
+THE NEXT LINE DOES NOT MATCH
+First;DIFFERENT_USER_RESOLVER;user_pattern;optional;10000;1000;100;10000000;X;100.5;10.5;true
 
 Second;USER_RESOLVER;user_pattern;;10000;1000;100;10000000;X;100.5;10.5;true
 
+THE NEXT LINE DOES NOT MATCH
+Second;USER_RESOLVER;DIFFERENT_user_pattern;;10000;1000;100;10000000;X;100.5;10.5;true
 Third;USER_RESOLVER;user_pattern;optional;-10000;1000;100;10000000;X;100.5;10.5;true
+
 Forth;USER_RESOLVER;user_pattern;optional;10000;1000;100;10000000;X;100.5;10.5;true
 
+THE NEXT LINE DOES NOT MATCH
+Forth;USER_RESOLVER;user_pattern;optional;no_number;1000;100;10000000;X;100.5;10.5;true
 
 Fifth;USER_RESOLVER;user_pattern;optional;10000;1000;100;10000000;X;-100.5;10.5;true
 
-THIS LINE DOES NOT MATCH
-
-THIS LINE DOES NOT MATCH
-
+THE NEXT LINE DOES NOT MATCH
+Fifth;USER_RESOLVER;user_pattern;optional;10000;no_number;100;10000000;X;-100.5;10.5;true
 
 Sixth;USER_RESOLVER;user_pattern;optional;10000;1000;100;10000000;X;100.5;10.5;false
-THIS LINE DOES NOT MATCH
+
+THE NEXT LINES DO NOT MATCH
+Sixth;USER_RESOLVER;user_pattern;optional;10000;1000;no_number;10000000;X;100.5;10.5;false
+Sixth;USER_RESOLVER;user_pattern;optional;10000;1000;100;no_number;X;100.5;10.5;false
+Sixth;USER_RESOLVER;user_pattern;optional;10000;1000;100;10000000;XY;100.5;10.5;false
+Sixth;USER_RESOLVER;user_pattern;optional;10000;1000;100;10000000;X;no_number;10.5;false
+Sixth;USER_RESOLVER;user_pattern;optional;10000;1000;100;10000000;X;100.5;no_number;false
+Sixth;USER_RESOLVER;user_pattern;optional;10000;1000;100;10000000;X;100.5;10.5;no_boolean

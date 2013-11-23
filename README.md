@@ -68,11 +68,16 @@ An optional match can be declared by annotating a field with `@OptionalMatch`. I
 `PropertyDelegate`'s setter will never be invoked (when using a custom `PropertyDelegate`).
 
 #### Dealing with regular expressions
-Do not forget that the `@MatchBy` annotation takes a regular expression as its argument. Therefore, it is important to escape
+Always keep in mind that `@MatchBy` annotation take regular expressions as their arguments. Therefore, it is important to escape
 all special characters that are found in regular expressions such as for example `.\\*,[](){}+?^$`. Also, note that the
 default matching patterns for non-primitive types or their wrappers is **non-greedy**. This means that the pattern `@name@`
 would match the line **foo** by only the first letter **f**. If you want to match the full line, you have to declare the matching
-expression as `^@name@$` what is the regular expression for a full line match.
+expression as `^@name@$` what is the regular expression for a full line match. Be aware that using regular expressions might
+require you to define a `@WritePattern` which is described below.
+
+Using regular expressions allows you to specify matching constraints natively. Annotating a field with `@MatchBy("[a-z]{1,5]")`
+would for example allow for only matching lines where the property is represented by one to five lower case characters.
+Configuring mismatch handling is described below.
 
 #### Writing beans
 Similar to reading contents from a source, this utility allows to write a list of beans to a target. Without further

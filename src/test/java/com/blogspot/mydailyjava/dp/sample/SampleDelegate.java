@@ -25,6 +25,6 @@ public class SampleDelegate extends PropertyDelegate {
 
     @Override
     public String getPattern() {
-        return "[A-Z_]+";
+        return "USER_RESOLVER";
     }
 }

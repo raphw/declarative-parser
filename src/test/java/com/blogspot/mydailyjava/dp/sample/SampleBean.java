@@ -1,16 +1,14 @@
 package com.blogspot.mydailyjava.dp.sample;
 
-import com.blogspot.mydailyjava.dp.annotation.MatchBy;
-import com.blogspot.mydailyjava.dp.annotation.OptionalMatch;
-import com.blogspot.mydailyjava.dp.annotation.ResolveMatchWith;
-import com.blogspot.mydailyjava.dp.annotation.Skip;
+import com.blogspot.mydailyjava.dp.annotation.*;
 
 @MatchBy(SampleBean.PATTERN)
 @Skip(Skip.Policy.EMPTY)
 public class SampleBean {
 
-    public static final String PATTERN = "@string@;@userResolvedString@;@userPatternString@;@optionalString@;@aInt@;" +
-            "@aShort@;@aByte@;@aLong@;@aChar@;@aDouble@;@aFloat@;@aBoolean@";
+    public static final String PATTERN = "@string@;@userResolvedString@;@userPatternString@;" +
+            "@optionalString@;@aInt@;@aShort@;@aByte@;@aLong@;@aChar@;" +
+            "@aDouble@;@aFloat@;@aBoolean@";
     public static final String ALTERED_PATTERN = "--" + PATTERN + "--";
 
     private String string;
