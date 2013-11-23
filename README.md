@@ -80,7 +80,7 @@ configuration, the same pattern as in `@MatchBy` will be used for writing where 
 the bean values. This can however result in distorted output since symbols of regular expressions are written *as they are*.
 Therefore, a user can define an output pattern by declaring `@WritePattern`. This pattern understands the same type of property
 expressions such as `@name` but does not use regular expressions. Remember that regular expressions must therefore not be escaped
-when a `@WritePattern` is specified.
+when a `@WritePattern` is specified. A property expression can however be escaped in the same manner as in a `@MatchBy` statement.
 
 #### Handling mismatches
 When a content source is parsed but a single line cannot be matched to the specified expression, the extraction will abort
