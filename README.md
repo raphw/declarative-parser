@@ -106,4 +106,4 @@ for creating `PropertyDelegate`s for any field. The default implementation `Simp
 such an implementation. That way, it would be for example possible to automatically create suitable patterns for [bean validation
 (JSR-303) annotations](http://beanvalidation.org/1.0/spec/).
 
-[![Build Status](https://travis-ci.org/raphw/wicket-async-task.png)](https://travis-ci.org/raphw/wicket-async-task)
+[![Build Status](https://travis-ci.org/raphw/declarative-parser.png)](https://travis-ci.org/raphw/declarative-parser)
