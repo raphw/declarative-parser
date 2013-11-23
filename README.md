@@ -69,10 +69,10 @@ An optional match can be declared by annotating a field with `@OptionalMatch`. I
 
 #### Dealing with regular expressions
 Do not forget that the `@MatchBy` annotation takes a regular expression as its argument. Therefore, it is important to escape
-all special characters that are found in regular expressions such as for example **.\\*,[](){}+?^$**`. Also, note that the
-default matching patterns for non-primitive types or their wrappers is **non-greedy**. This means that the pattern **@name@**
+all special characters that are found in regular expressions such as for example `.\\*,[](){}+?^$`. Also, note that the
+default matching patterns for non-primitive types or their wrappers is **non-greedy**. This means that the pattern `@name@`
 would match the line **foo** by only the first letter **f**. If you want to match the full line, you have to declare the matching
-expression as **^@name@$** what is the regular expression for a full line match.
+expression as `^@name@$` what is the regular expression for a full line match.
 
 #### Writing beans
 Similar to reading contents from a source, this utility allows to write a list of beans to a target. Without further
