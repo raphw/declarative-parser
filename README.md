@@ -102,8 +102,8 @@ Therefore, this tool should not perform worse than a hand-written matcher once t
 
 #### Extension points
 Besides providing your own `PropertyDelegate`s, it is possible to implement a custom `IDelegationFactory` which is responsible
-for creating `PropertyDelegate`s for any field. The default implementation `SimpleDelegationFactory` provides an example for
-such an implementation. That way, it would be for example possible to automatically create suitable patterns for [bean validation
-(JSR-303) annotations](http://beanvalidation.org/1.0/spec/).
+for creating (custom) `PropertyDelegate`s for any field. The default implementation `SimpleDelegationFactory` provides an example 
+for such an implementation. That way, it would be for example possible to automatically create suitable patterns for [bean 
+validation (JSR-303) annotations](http://beanvalidation.org/1.0/spec/).
 
 [![Build Status](https://travis-ci.org/raphw/declarative-parser.png)](https://travis-ci.org/raphw/declarative-parser)
